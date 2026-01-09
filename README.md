@@ -4,13 +4,13 @@ Frontend for **CulleraDigital**, a local digital news platform.
 
 This application is built with **React** and **Vite**, and consumes a REST API developed with Spring Boot to display local news content.
 
-## 🚀 Technologies
+## Technologies
 - React
 - Vite
 - Tailwind CSS
 - JavaScript (ES6+)
 
-## 🔧 Environment variables
+## Environment variables
 The application uses environment variables to configure the backend API URL.
 
 Example (`.env` file):
@@ -19,7 +19,7 @@ VITE_API_URL=http://localhost:8080
 
 In production, this variable is configured directly in the deployment platform.
 
-## 📦 Development
+## Development
 Install dependencies and start the development server:
 
 ```bash
