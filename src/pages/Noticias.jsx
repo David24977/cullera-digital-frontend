@@ -11,8 +11,6 @@ function Noticias() {
   const [busqueda, setBusqueda] = useState("");
   const [resultados, setResultados] = useState([]);
   const [error, setError] = useState(null);
-  const limpiarTitular = (titular = "") =>
-    titular.replace("[DESTACADA]", "").trim();
 
   const categorias = [
     "TODAS",
@@ -27,6 +25,9 @@ function Noticias() {
     "SOCIEDAD",
   ];
 
+  // =====================
+  // CARGA INICIAL
+  // =====================
   useEffect(() => {
     const cargarNoticias = async () => {
       try {
@@ -55,7 +56,9 @@ function Noticias() {
     cargarNoticias();
   }, []);
 
-  // 🔍 BUSCADOR EN TIEMPO REAL
+  // =====================
+  // BUSCADOR EN TIEMPO REAL
+  // =====================
   useEffect(() => {
     if (busqueda.trim().length < 2) return;
 
@@ -75,16 +78,22 @@ function Noticias() {
     return <p className="text-red-600">{error}</p>;
   }
 
+  // =====================
   // FILTRADO POR CATEGORÍA
+  // =====================
   const hoyFiltradas =
-    categoria === "TODAS" ? hoy : hoy.filter((n) => n.categoria === categoria);
+    categoria === "TODAS"
+      ? hoy
+      : hoy.filter((n) => n.categoria === categoria);
 
-  const noticiaMarcada = hoyFiltradas.find((n) =>
-    n.titular?.includes("[DESTACADA]")
-  );
-
+  // =====================
+  // DESTACADA (BACKEND MANDA)
+  // =====================
   const noticiaDestacada =
-    categoria === "TODAS" ? noticiaMarcada || hoyFiltradas[0] || null : null;
+  categoria === "TODAS"
+    ? hoyFiltradas.find((n) => n.destacada) || null
+    : null;
+
 
   const restoNoticias = noticiaDestacada
     ? hoyFiltradas.filter((n) => n.id !== noticiaDestacada.id)
@@ -92,7 +101,9 @@ function Noticias() {
 
   return (
     <div className="space-y-12">
+      {/* ===================== */}
       {/* BUSCADOR */}
+      {/* ===================== */}
       <section>
         <input
           type="text"
@@ -129,7 +140,9 @@ function Noticias() {
         )}
       </section>
 
+      {/* ===================== */}
       {/* FILTRO POR CATEGORÍA */}
+      {/* ===================== */}
       <section>
         <h2 className="text-sm font-semibold text-gray-600 mb-3">
           Filtrar por categoría
@@ -152,7 +165,9 @@ function Noticias() {
         </div>
       </section>
 
+      {/* ===================== */}
       {/* NOTICIAS DE HOY */}
+      {/* ===================== */}
       <section>
         <h2 className="text-xl font-bold mb-6">Noticias de hoy</h2>
 
@@ -167,8 +182,8 @@ function Noticias() {
               >
                 <MediaNoticia
                   mediaUrl={noticiaDestacada.imagenUrl}
-                  titulo={limpiarTitular(noticiaDestacada.titular)}
-                  className="h-80 w-full object-cover"
+                  titulo={noticiaDestacada.titular}
+                  className="w-full aspect-[16/9] object-cover"
                 />
 
                 <div className="p-6">
@@ -177,7 +192,7 @@ function Noticias() {
                   </span>
 
                   <h3 className="text-2xl font-bold mt-2 mb-3">
-                    {limpiarTitular(noticiaDestacada.titular)}
+                    {noticiaDestacada.titular}
                   </h3>
 
                   <p className="text-gray-700 text-lg">
@@ -213,7 +228,9 @@ function Noticias() {
         )}
       </section>
 
+      {/* ===================== */}
       {/* HISTÓRICO */}
+      {/* ===================== */}
       <section>
         <h2 className="text-xl font-bold mb-4">Noticias anteriores</h2>
 
@@ -226,8 +243,7 @@ function Noticias() {
             {anteriores.map((n) => (
               <li key={n.id}>
                 <Link to={`/noticias/${n.id}`}>
-                  {new Date(n.fecha).toLocaleDateString("es-ES")} –{" "}
-                  {limpiarTitular(n.titular)}
+                  {new Date(n.fecha).toLocaleDateString("es-ES")} – {n.titular}
                 </Link>
               </li>
             ))}
@@ -235,10 +251,10 @@ function Noticias() {
         </details>
       </section>
 
+      {/* ===================== */}
       {/* PUBLICIDAD */}
-    
-       <CarruselPublicidad/>
-      
+      {/* ===================== */}
+      <CarruselPublicidad />
     </div>
   );
 }

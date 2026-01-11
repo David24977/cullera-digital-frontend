@@ -40,13 +40,13 @@ export async function buscarNoticiasEntreFechasAdmin(inicio, fin) {
 
 // ===== ACCIONES PROTEGIDAS =====
 export async function crearNoticia(noticia) {
-  const token = localStorage.getItem("token");
+ const ADMIN_TOKEN = import.meta.env.VITE_ADMIN_TOKEN;
 
   const response = await fetch(`${API_URL}/noticias`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${ADMIN_TOKEN}`,
     },
     body: JSON.stringify(noticia),
   });
@@ -56,13 +56,14 @@ export async function crearNoticia(noticia) {
 }
 
 export async function modificarNoticia(id, noticia) {
-  const token = localStorage.getItem("token");
+ const ADMIN_TOKEN = import.meta.env.VITE_ADMIN_TOKEN;
+
 
   const response = await fetch(`${API_URL}/noticias/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${ADMIN_TOKEN}`,
     },
     body: JSON.stringify(noticia),
   });
@@ -72,12 +73,13 @@ export async function modificarNoticia(id, noticia) {
 }
 
 export async function borrarNoticia(id) {
-  const token = localStorage.getItem("token");
+ const ADMIN_TOKEN = import.meta.env.VITE_ADMIN_TOKEN;
+
 
   const response = await fetch(`${API_URL}/noticias/${id}`, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${ADMIN_TOKEN}`,
     },
   });
 

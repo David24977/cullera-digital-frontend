@@ -4,8 +4,8 @@ import Noticias from "./pages/Noticias";
 import NoticiaDetalle from "./pages/NoticiaDetalle";
 import HistoricoNoticias from "./pages/HistoricoNoticias";
 import QuienesSomos from "./pages/QuienesSomos";
-import LoginAdmin from "./admin/LoginAdmin";
 import Admin from "./admin/Admin";
+import NotFound from "./components/NotFound";
 
 function App() {
   useEffect(() => {
@@ -55,8 +55,9 @@ function App() {
             <Route path="/noticias/:id" element={<NoticiaDetalle />} />
             <Route path="/historico" element={<HistoricoNoticias />} />
             <Route path="/quienes-somos" element={<QuienesSomos />} />
-            <Route path="/admin/login" element={<LoginAdmin />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="*" element={<NotFound />} />
+
           </Routes>
         </main>
 
