@@ -4,16 +4,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 // TOKEN + HEADERS
 // =====================
 function getAdminToken() {
-  const token = import.meta.env.VITE_ADMIN_TOKEN;
-
-  if (!token) {
-    throw new Error(
-      "VITE_ADMIN_TOKEN no está definido. Revisa las variables de entorno en Vercel."
-    );
-  }
-
-  return token;
+  return import.meta.env.VITE_ADMIN_TOKEN || "";
 }
+
 
 function authHeaders(extraHeaders = {}) {
   return {
